@@ -53,6 +53,13 @@ class Point
 		cout << "X = " << x << "\t Y = " << y << endl;
 	}
 };
+
+double Distance(const Point& A, const Point& B) {
+	double x_distance = A.get_x() - B.get_x();
+	double y_distance = A.get_y() - B.get_y();
+	return sqrt(x_distance * x_distance + y_distance * y_distance);
+}
+
 void main() {
 	setlocale(LC_ALL, "");
 
@@ -67,4 +74,6 @@ void main() {
 	Point C(2, 3); //2ArgumentConstructor
 	C.print();
 	cout << A.distance(C) << endl;
+	cout << Distance(B, C) << endl;
 }
+
