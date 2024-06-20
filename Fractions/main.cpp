@@ -43,6 +43,14 @@ public:
 		set_denominator(1);
 		cout << "SingleArgumentConstructor: " << this << endl;
 	}
+	Fraction(double decimal) {
+		decimal += 1e-10;
+		integer = decimal;
+		decimal -= integer;
+		denominator = 1e+9;
+		numerator = decimal * denominator;
+		reduce();
+	}
 	Fraction(int numerator, int denominator) {
 		this->integer = 0;
 		this->numerator = numerator;
@@ -109,6 +117,29 @@ public:
 		numerator %= denominator;
 		return *this;
 	}
+	Fraction inverted()const
+	{
+		Fraction inverted = *this;
+		inverted.to_improper();
+		swap(inverted.numerator, inverted.denominator);
+		return inverted;
+	}
+	Fraction& reduce()
+	{
+		int more, less, rest;
+		if (numerator > denominator)more = numerator, less = denominator;
+		else less = numerator, more = denominator;
+		do
+		{
+			rest = more % less;
+			more = less;
+			less = rest;
+		} while (rest);
+		int GCD = more;	//GCD - Greatest Common Divisor
+		numerator /= GCD;
+		denominator /= GCD;
+		return *this;
+	}
 	double quotient() {
 		to_improper();
 		return (numerator / denominator);
@@ -128,8 +159,8 @@ public:
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
 //#define INPUT_OUTPUT_CHECK
-#define COMPARISON_CHECK
-
+//#define COMPARISON_CHECK
+#define CONVERSIONS_HOMEWORK
 
 //	Arithmetical operators
 
@@ -302,7 +333,8 @@ void main() {
 	cout << (Fraction(2, 6, 2) <= Fraction(3, 6, 5)) << endl;
 	cout << delimiter << endl;
 #endif // COMPARISON_CHECK
-
+	Fraction A = 3.33;
+	cout << A << endl;
 
 
 
