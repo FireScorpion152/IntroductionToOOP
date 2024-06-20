@@ -98,7 +98,6 @@ public:
 		integer--;
 		return old;
 	}
-
 	//		Methods
 	Fraction& to_improper() {
 		numerator += integer * denominator;
@@ -111,7 +110,8 @@ public:
 		return *this;
 	}
 	double quotient() {
-		return ((integer * denominator) + numerator) / denominator;
+		to_improper();
+		return (numerator / denominator);
 	}
 	void print()const {
 		if (integer)cout << integer;
@@ -127,7 +127,11 @@ public:
 
 //#define CONSTRUCTORS_CHECK
 //#define ARITHMETICAL_OPERATORS_CHECK
-#define INPUT_OUTPUT_CHECK
+//#define INPUT_OUTPUT_CHECK
+#define COMPARISON_CHECK
+
+
+//	Arithmetical operators
 
 Fraction operator*(Fraction& left, Fraction& right)
 {
@@ -166,6 +170,30 @@ Fraction operator-(Fraction& left, Fraction& right)
 	return result.to_proper();
 }
 
+//		Comparison Operators
+
+bool operator==(Fraction left, Fraction right) {
+	left.to_improper();
+	right.to_improper();
+	return left.quotient() == right.quotient();
+}
+bool operator!=(const Fraction& left, const Fraction& right) {
+	return !(left == right);
+}
+bool operator>( Fraction left,  Fraction right) {
+	return left.quotient() > right.quotient();
+}
+bool operator<( Fraction left,  Fraction right) {
+	return left.quotient() < right.quotient();
+}
+bool operator>=(const Fraction& left, const Fraction& right) {
+	return !(left < right);
+}
+bool operator<=(const Fraction& left, const Fraction& right) {
+	return !(left > right);
+}
+
+//		Output and input operators
 std::ostream& operator<<(std::ostream& os, const Fraction& obj) {
 	if (obj.get_integer() && obj.get_numerator()) return os << obj.get_integer() << "(" << obj.get_numerator() << "/" << obj.get_denominator() << ")" << endl;
 	if (obj.get_numerator()) {
@@ -210,6 +238,7 @@ void main() {
 	cout << delimiter << endl;
 	E.print();
 	cout << delimiter << endl;
+	cout << endl;
 
 #endif // CONSTRUCTORS_CHECK
 	
@@ -242,6 +271,7 @@ void main() {
 	H = F + G;
 	H.print();
 	cout << delimiter << endl;
+	cout << endl;
 
 #endif // ARITHMETICAL_OPERATORS_CHECK
 	
@@ -255,7 +285,25 @@ void main() {
 	cout << delimiter << endl;
 	cout << I;
 	cout << delimiter << endl;
+	cout << endl;
 #endif // INPUT_OUTPUT_CHECK
+#ifdef COMPARISON_CHECK
+	cout << delimiter << endl;
+	cout << (Fraction(2, 6, 2) == Fraction(3, 6, 5)) << endl;
+	cout << delimiter << endl;
+	cout << (Fraction(2, 6, 2) != Fraction(3, 6, 5)) << endl;
+	cout << delimiter << endl;
+	cout << (Fraction(2, 6, 2) > Fraction(3, 6, 5)) << endl;
+	cout << delimiter << endl;
+	cout << (Fraction(2, 6, 2) < Fraction(3, 6, 5)) << endl;
+	cout << delimiter << endl;
+	cout << (Fraction(2, 6, 2) >= Fraction(3, 6, 5)) << endl;
+	cout << delimiter << endl;
+	cout << (Fraction(2, 6, 2) <= Fraction(3, 6, 5)) << endl;
+	cout << delimiter << endl;
+#endif // COMPARISON_CHECK
+
+
 
 
 }
