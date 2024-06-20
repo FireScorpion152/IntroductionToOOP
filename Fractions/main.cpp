@@ -106,6 +106,14 @@ public:
 		integer--;
 		return old;
 	}
+	//		Type-cast operators
+	explicit operator int() {
+		
+		return to_proper().integer;
+	}
+	explicit operator double() {
+		return ((integer * denominator) + numerator) / double(denominator);
+	}
 	//		Methods
 	Fraction& to_improper() {
 		numerator += integer * denominator;
@@ -333,9 +341,9 @@ void main() {
 	cout << (Fraction(2, 6, 2) <= Fraction(3, 6, 5)) << endl;
 	cout << delimiter << endl;
 #endif // COMPARISON_CHECK
-	Fraction A = 3.33;
-	cout << A << endl;
-
+	Fraction A(3, 4, 5);
+	double da = double(A);
+	cout << da << endl;
 
 
 }
