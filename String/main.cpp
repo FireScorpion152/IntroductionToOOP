@@ -38,7 +38,11 @@ public:
 		this->str = new char[size] {};
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
-
+	String(const String&& other) noexcept {
+		this->size = move(other.size);
+		this->str = move(other.str);
+		cout << "Move constructor:\t" << this << endl;
+	}
 	String(const String& other)
 	{
 		this->size = other.size;
@@ -65,6 +69,14 @@ public:
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
 	}
+	String& operator=(String&& other) noexcept {
+		if (this != &other) {
+			this->size = move(other.get_size());
+			*this->str = move(*other.get_str());
+		}
+		cout << "MoveAssignment operator: " << this << endl;
+		return *this;
+	}
 
 	//				  Methods:
 	void print()const
@@ -73,6 +85,19 @@ public:
 		cout << "Size:\t" << size << endl;
 	}
 };
+
+String operator+(const String& left, const String& right)
+{
+	cout << delimiter << endl;
+	cout << "Operator + " << endl;
+	String buffer(left.get_size() + right.get_size() - 1);
+	buffer.print();
+	for (int i = 0; i < left.get_size(); i++)
+		buffer.get_str()[i] = left.get_str()[i];
+	for (int i = 0; i < right.get_size(); i++)
+		buffer.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+	return buffer;
+}
 
 std::ostream& operator<<(std::ostream& os, const String& obj) {
 	return os << obj.get_str();
@@ -90,6 +115,7 @@ void main(){
 	cout << delimiter << endl;
 
 	String str3 = "Hello";
+	str3 = String(str3);
 	str3.print();
 	cout << delimiter << endl;
 
@@ -103,3 +129,7 @@ void main(){
 	cout << delimiter << endl;
 
 }
+
+//							The rule of five.
+// Для предотвращения излишней издержки на копирование, нужно объявить все пять конструкторов для класса: Конструктор по умолчанию, конструктор копирования, конструктор перемещения, 
+// конструктор оператора копирования, конструктор оператора перемещения.
