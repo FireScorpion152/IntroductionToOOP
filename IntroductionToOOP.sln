@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntroductionToOOP", "IntroductionToOOP\IntroductionToOOP.vcxproj", "{01772FC1-E549-4BD4-B6AA-0ADF24C31063}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fractions", "Fractions\Fractions.vcxproj", "{3976935F-657E-46D3-AF0F-42B237B2B8E3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Fraction", "Fractions\Fractions.vcxproj", "{3976935F-657E-46D3-AF0F-42B237B2B8E3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "String", "String\String.vcxproj", "{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{3976935F-657E-46D3-AF0F-42B237B2B8E3}.Release|x64.Build.0 = Release|x64
 		{3976935F-657E-46D3-AF0F-42B237B2B8E3}.Release|x86.ActiveCfg = Release|Win32
 		{3976935F-657E-46D3-AF0F-42B237B2B8E3}.Release|x86.Build.0 = Release|Win32
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Debug|x64.ActiveCfg = Debug|x64
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Debug|x64.Build.0 = Debug|x64
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Debug|x86.ActiveCfg = Debug|Win32
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Debug|x86.Build.0 = Debug|Win32
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Release|x64.ActiveCfg = Release|x64
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Release|x64.Build.0 = Release|x64
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Release|x86.ActiveCfg = Release|Win32
+		{EBE03FA0-E5A1-4D08-9D40-CB191D3DD433}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
