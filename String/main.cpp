@@ -1,4 +1,5 @@
-﻿#include<iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include<iostream>
 using namespace std;
 
 #define delimiter "\n--------------------------------------------------------------------\n"
@@ -12,36 +13,34 @@ public:
 	{
 		return size;
 	}
-	const char* get_str()const
+	char* get_str()const
 	{
 		return str;
 	}
-	char* get_str()
+	void set_size(int size)
 	{
-		return str;
+		this->size = size;
 	}
 
 	//				Constructors:
-	String(const char* str)
+	String()
 	{
-		this->size = strlen(str) + 1;
+		this->size = 80;
 		this->str = new char[size] {};
-		for (int i = 0; str[i]; i++)
-		{
-			this->str[i] = str[i];
-		}
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	explicit String(int size = 80)
+	String(int size)
 	{
 		this->size = size;
 		this->str = new char[size] {};
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
-	String(const String&& other) noexcept {
-		this->size = move(other.size);
-		this->str = move(other.str);
-		cout << "Move constructor:\t" << this << endl;
+	String(const char* other)
+	{
+		size = strlen(other) + 1;
+		str = new char[size] {};
+		strcpy(str, other);
+		cout << "Constructor:\t\t" << this << endl;
 	}
 	String(const String& other)
 	{
@@ -63,18 +62,10 @@ public:
 	String& operator=(const String& other)
 	{
 		delete[] this->str;
-		this->size = other.size;
+		this->size = other.get_size();
 		this->str = new char[size] {};
 		for (int i = 0; i < size; i++)this->str[i] = other.str[i];
 		cout << "CopyAssignment:\t\t" << this << endl;
-		return *this;
-	}
-	String& operator=(String&& other) noexcept {
-		if (this != &other) {
-			this->size = move(other.get_size());
-			*this->str = move(*other.get_str());
-		}
-		cout << "MoveAssignment operator: " << this << endl;
 		return *this;
 	}
 
@@ -88,14 +79,15 @@ public:
 
 String operator+(const String& left, const String& right)
 {
-	cout << delimiter << endl;
-	cout << "Operator + " << endl;
-	String buffer(left.get_size() + right.get_size() - 1);
-	buffer.print();
+	String buffer = left.get_size() + right.get_size() - 1;
 	for (int i = 0; i < left.get_size(); i++)
+	{
 		buffer.get_str()[i] = left.get_str()[i];
+	}
 	for (int i = 0; i < right.get_size(); i++)
+	{
 		buffer.get_str()[i + left.get_size() - 1] = right.get_str()[i];
+	}
 	return buffer;
 }
 
@@ -124,10 +116,14 @@ void main(){
 	cout << str4.get_size();
 	cout << delimiter << endl;
 
-	str4 = str3;
-	str4.print();
-	cout << delimiter << endl;
+	//str4 = str3;
+	//str4.print();
+	//cout << delimiter << endl;
 
+	String str5;
+	str5 = str3 + str4;		//Copy assignment
+	str5.print();
+	cout << str5 << endl;
 }
 
 //							The rule of five.
