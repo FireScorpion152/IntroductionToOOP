@@ -22,32 +22,38 @@ public:
 	}
 
 	//				Constructors:
-	String(const char* str)
+	String(const char* str) :size(strlen(str) + 1), str(new char[size] {})
 	{
-		this->size = strlen(str) + 1;
-		this->str = new char[size] {};
+		//this->size = strlen(str) + 1;
+		//this->str = new char[size] {};
 		for (int i = 0; str[i]; i++)
 		{
 			this->str[i] = str[i];
 		}
 		cout << "DefaultConstructor:\t" << this << endl;
 	}
-	explicit String(int size = 80)
+
+	explicit String(int size = 80) :size(size), str(new char[size] {})
 	{
-		this->size = size;
-		this->str = new char[size] {};
+		//this->size = size;
+		//this->str = new char[size] {};
 		cout << "1ArgConstructor:\t" << this << endl;
 	}
 
-	String(const String& other)
+	String(const String& other) :size(other.size), str(new char[size] {})
 	{
-		this->size = other.size;
-		this->str = new char[size] {};
+		//this->size = other.size;
+		//this->str = new char[size] {};
 		for (int i = 0; i < size; i++)
 		{
 			this->str[i] = other.str[i];
 		}
 		cout << "CopyConstructor:\t" << this << endl;
+	}
+	String(String&& other)noexcept : size(other.size), str(other.str) {
+		other.size = 0;
+		other.str = nullptr;
+		cout << "MoveConstructor:\t" << this << endl;
 	}
 	~String()
 	{
@@ -109,11 +115,14 @@ String operator+(const String& left, const String& right)
 std::ostream& operator<<(std::ostream& os, const String& obj) {
 	return os << obj.get_str();
 }
-#define PLUS_OPERATOR_CHECK
-#define MOVE_ASSIGNMENT_CHECK
-void main(){
+//#define CLASSWORK
+//#define PLUS_OPERATOR_CHECK
+//#define MOVE_ASSIGNMENT_CHECK
+#define CALLING_CONSTRUCTORS
+void main() {
 	setlocale(LC_ALL, "");
 
+#ifdef CLASSWORK
 	String str1;
 	str1.print();
 	cout << delimiter << endl;
@@ -130,6 +139,8 @@ void main(){
 	cout << "String: " << str4 << endl;
 	cout << str4.get_size();
 	cout << delimiter << endl;
+#endif // CLASSWORK
+
 
 #ifdef PLUS_OPERATOR_CHECK
 	str4 = str3 + str4;
@@ -144,6 +155,20 @@ void main(){
 	cout << str5 << endl;
 	cout << delimiter << endl;
 #endif // MOVE_ASSIGNMENT_CHECK
+#ifdef CALLING_CONSTRUCTORS
+	String str1;
+	str1.print();
+	cout << delimiter << endl;
+	String str2(8);
+	str2.print();
+	cout << delimiter << endl;
+	String str3 = "Hello";
+	str3.print();
+	cout << delimiter << endl;
+	String str4{};
+	str4.print();
+	cout << delimiter << endl;
+#endif // CALLING_CONSTRUCTORS
 
 
 }
