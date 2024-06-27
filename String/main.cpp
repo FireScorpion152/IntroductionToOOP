@@ -109,7 +109,8 @@ String operator+(const String& left, const String& right)
 std::ostream& operator<<(std::ostream& os, const String& obj) {
 	return os << obj.get_str();
 }
-
+#define PLUS_OPERATOR_CHECK
+#define MOVE_ASSIGNMENT_CHECK
 void main(){
 	setlocale(LC_ALL, "");
 
@@ -130,12 +131,19 @@ void main(){
 	cout << str4.get_size();
 	cout << delimiter << endl;
 
-	//str4 = str3;
-	//str4.print();
-	//cout << delimiter << endl;
+#ifdef PLUS_OPERATOR_CHECK
+	str4 = str3 + str4;
+	cout << str4 << endl;
+	cout << delimiter << endl;
+
+#endif // PLUS_OPERATOR_CHECK
+
+#ifdef MOVE_ASSIGNMENT_CHECK
 	String str5;
-	str5 = std::move(str4);
+	str5 = move(str4);
 	cout << str5 << endl;
 	cout << delimiter << endl;
+#endif // MOVE_ASSIGNMENT_CHECK
+
 
 }
