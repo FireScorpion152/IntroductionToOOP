@@ -22,44 +22,46 @@ public:
 	}
 
 	//				Constructors:
-	String(const char* str) :size(strlen(str) + 1), str(new char[size] {})
-	{
-		//this->size = strlen(str) + 1;
-		//this->str = new char[size] {};
-		for (int i = 0; str[i]; i++)
-		{
-			this->str[i] = str[i];
-		}
-		cout << "DefaultConstructor:\t" << this << endl;
-	}
-
 	explicit String(int size = 80) :size(size), str(new char[size] {})
 	{
 		//this->size = size;
 		//this->str = new char[size] {};
-		cout << "1ArgConstructor:\t" << this << endl;
+		cout << "Constructor:\t" << this << endl;
 	}
-
-	String(const String& other) :size(other.size), str(new char[size] {})
+	String(const char str[]) :String(strlen(str) + 1)
 	{
+		//this->size = strlen(str) + 1;
+		//Функция strlen() возвращает размер строки в символах,
+		//и нам нужно добавить еще один Байт для NULL-Terminator-а
+		//this->str = new char[size] {};
+		for (int i = 0; i < size; i++)this->str[i] = str[i];
+		cout << "Constructor:\t" << this << endl;
+	}
+	String(const String& other) :String(other.str)
+	{
+		//Deep copy (Побитовое копирование):
 		//this->size = other.size;
 		//this->str = new char[size] {};
-		for (int i = 0; i < size; i++)
-		{
-			this->str[i] = other.str[i];
-		}
-		cout << "CopyConstructor:\t" << this << endl;
+		//for (int i = 0; i < size; i++)this->str[i] = other.str[i];
+		cout << "CopyConstructor:" << this << endl;
 	}
-	String(String&& other)noexcept : size(other.size), str(other.str) {
+	String(String&& other)noexcept :size(other.size), str(other.str)//r-value reference
+	{
+		//Shallow copy:
+		//this->size = other.size;
+		//this->str = other.str;	//Shallow copy
+
+		//Reset other:
 		other.size = 0;
 		other.str = nullptr;
-		cout << "MoveConstructor:\t" << this << endl;
+		cout << "MoveConstructor:" << this << endl;
 	}
 	~String()
 	{
 		delete[] str;
-		cout << "Destructor:\t\t" << this << endl;
+		cout << "Destructor:\t" << this << endl;
 	}
+
 
 	//				 Operators:
 	String& operator=(const String& other)
@@ -94,8 +96,11 @@ public:
 	//				  Methods:
 	void print()const
 	{
-		cout << "String:\t" << str << endl;
-		cout << "Size:\t" << size << endl;
+		cout << "Obj:\t\t" << this << endl;
+		cout << "Size:\t\t" << size << endl;
+		cout << "Addr:\t\t" << &str << endl;
+		cout << "Str:\t\t" << str << endl;
+		cout << delimiter << endl;
 	}
 };
 String operator+(const String& left, const String& right)
@@ -168,6 +173,8 @@ void main() {
 	String str4{};
 	str4.print();
 	cout << delimiter << endl;
+	String str6{ str3 };
+	str6.print();
 #endif // CALLING_CONSTRUCTORS
 
 
