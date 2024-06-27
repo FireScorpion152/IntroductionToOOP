@@ -68,6 +68,15 @@ public:
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
 	}
+	String& operator=(String&& other) {
+		if (this != &other) {
+			this->size = 0;
+			this->size = move(other.size);
+			this->str = move(other.str);
+		}
+		cout << "MoveAssignment:\t\t" << this << endl;
+		return *this;
+	}
 
 	//				  Methods:
 	void print()const
@@ -94,6 +103,12 @@ String operator+(const String& left, const String& right)
 std::ostream& operator<<(std::ostream& os, const String& obj) {
 	return os << obj.get_str();
 }
+bool operator==(String left, String right) {
+	return left.get_str() == left.get_str();
+}
+bool operator!=(String& left, String& right) {
+	return (left.get_str() != right.get_str() || left.get_size() != right.get_size());
+}
 
 void main(){
 	setlocale(LC_ALL, "");
@@ -119,6 +134,10 @@ void main(){
 	//str4 = str3;
 	//str4.print();
 	//cout << delimiter << endl;
+	String str5;
+	str5 = str4 + str3;
+	str5.print();
+	cout << delimiter << endl;
 
 	String str5;
 	str5 = str3 + str4;		//Copy assignment
