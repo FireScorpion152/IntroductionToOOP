@@ -98,6 +98,9 @@ void main(){
 	cout << str4.get_size();
 	cout << delimiter << endl;
 
+	//str4 = str3;
+	//str4.print();
+	//cout << delimiter << endl;
 	str4 = str3;
 	str4.print();
 	cout << delimiter << endl;
