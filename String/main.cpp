@@ -71,7 +71,7 @@ public:
 		delete[] this->str;
 		this->size = other.size;
 		this->str = other.str;
-		other, size = 0;
+		this->size = 0;
 		other.str = nullptr;
 		cout << "MoveAssignment:\t" << this << endl;
 		return *this;
