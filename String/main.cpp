@@ -65,6 +65,25 @@ public:
 		cout << "CopyAssignment:\t\t" << this << endl;
 		return *this;
 	}
+	String& operator=(String&& other) noexcept
+	{
+		if (this == &other) return *this;
+		delete[] this->str;
+		this->size = other.size;
+		this->str = other.str;
+		other, size = 0;
+		other.str = nullptr;
+		cout << "MoveAssignment:\t" << this << endl;
+		return *this;
+	}
+	char& operator[](int i)
+	{
+		return str[i];
+	}
+	const char& operator[](int i)const
+	{
+		return str[i];
+	}
 
 	//				  Methods:
 	void print()const
@@ -73,7 +92,20 @@ public:
 		cout << "Size:\t" << size << endl;
 	}
 };
-
+String operator+(const String& left, const String& right)
+{
+	cout << "Operator + " << endl;
+	String buffer(left.get_size() + right.get_size() - 1);
+	for (int i = 0; i < left.get_size(); i++)
+	{
+		buffer[i] = left[i];
+	}
+	for (int i = 0; i < right.get_size(); i++)
+	{
+		buffer[i + left.get_size() - 1] = right[i];
+	}
+	return buffer;
+}
 std::ostream& operator<<(std::ostream& os, const String& obj) {
 	return os << obj.get_str();
 }
@@ -101,8 +133,9 @@ void main(){
 	//str4 = str3;
 	//str4.print();
 	//cout << delimiter << endl;
-	str4 = str3;
-	str4.print();
+	String str5;
+	str5 = std::move(str4);
+	cout << str5 << endl;
 	cout << delimiter << endl;
 
 }
